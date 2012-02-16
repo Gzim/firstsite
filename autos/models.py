@@ -44,7 +44,7 @@ def get_image_path(instance, filename):
 
 #this class can add multiple pictures to a car
 class Auto3(models.Model):
-	user = models.ForeignKey(User, related_name='userToAuto3', editable=False)
+	user = models.ForeignKey(User, related_name='userToAuto3')
 	firstname = models.CharField(max_length=30, blank=True)
 	lastname = models.CharField(max_length=30, blank=True)
 	auto_name = models.CharField(max_length=40)
@@ -88,6 +88,11 @@ class Auto3(models.Model):
 
 			img = img.resize(size, Image.ANTIALIAS)
 			img.save(pic.path)
+
+
+
+
+
 
 
 #Imageclass for the Other classes
