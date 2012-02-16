@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Resulst for {{ username }}</h2>
+	<table>
+		<tr>
+		{% if errors %}
+		<ul>
+			{% for error in errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		</tr>
+	</table>
+	<table>
+		{% for name, pic1, pic2, pic3, pic4, pic5 in content %}
+		<tr>
+			<td>{{ name }}</td>
+			{% if pic1 %}
+			<td><img src="{{ MEDIA_URL }}{{ pic1 }}" /></td>
+			{% else %}
+			<p>No Images!</p>
+			{% endif %}
+		</tr>
+		<tr>
+			<td></td>
+			{% if pic2 %}
+			<td><img src="{{ MEDIA_URL }}{{ pic2 }}" /></td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td></td>
+			{% if pic3 %}
+			<td><img src="{{ MEDIA_URL }}{{ pic3 }}" /></td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td></td>
+			{% if pic4 %}
+			<td><img src="{{ MEDIA_URL }}{{ pic4 }}" /></td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td></td>
+			{% if pic5 %}
+			<td><img src="{{ MEDIA_URL }}{{ pic5 }}" /></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

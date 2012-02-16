@@ -1,0 +1,4 @@
+django
+
+mysql-python
+reportlab
