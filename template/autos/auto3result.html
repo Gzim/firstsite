@@ -1,22 +1,40 @@
 {% extends "base.html" %}
 
+{% block style %}
+<style type="text/css">
+	table {
+        border: 1px solid green;
+    }
+    td
+	{
+		text-align:left;
+		width:200px;
+	}
+	p {
+		font-family:"Times New Roman", Times, serif;
+		font-style:italic;
+		font-size:20px;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
 	<h2>Resulst for {{ username }}</h2>
+	{% if errors %}
 	<table>
 		<tr>
-		{% if errors %}
-		<ul>
-			{% for error in errors %}
-			<li>{{ error }}</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
+			<ul>
+				{% for error in errors %}
+				<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
 		</tr>
 	</table>
+	{% endif %}
 	<table>
 		{% for name, pic1, pic2, pic3, pic4, pic5 in content %}
 		<tr>
-			<td>{{ name }}</td>
+			<td><p>{{ name }}</p></td>
 			{% if pic1 %}
 			<td><img src="{{ MEDIA_URL }}{{ pic1 }}" /></td>
 			{% else %}
