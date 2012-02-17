@@ -28,9 +28,9 @@ urlpatterns += patterns('',
 
 #loggin in and out on page
 urlpatterns += patterns('',
-	(r'^login/$', 'django.contrib.auth.views.login', {'extra_context': {'next': '/time'}}),
+	(r'^login/$', 'django.contrib.auth.views.login', {'extra_context': {'next': '/'}}),
 	(r'^logout/$', 'django.contrib.auth.views.logout', {'extra_context': {'next_page': '/login'}}),
-	(r'^accounts/login/$', 'django.contrib.auth.views.login', {'extra_context': {'next': '/'}}),
+	(r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )
 
 #register on the website

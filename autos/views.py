@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from firstsite.autos.forms import *
+from django.contrib.auth.decorators import user_passes_test
 
 
 
@@ -59,3 +61,21 @@ def show_offers_of_user(request, username):
 	return render_to_response("autos/auto3result.html",
 			{'errors': errors, 'content': content, 'username': user.username},
                    context_instance=RequestContext(request))
+
+
+
+
+#needs to be login for using /books/search
+@user_passes_test(lambda u: u.has_perm('autos.add_auto3'))
+def add_a_car(request):
+	if request.method == 'POST':
+		form = Auto3Form(request.POST, request.FILES)
+		if form.is_valid():
+			car = form.save(commit=False)
+			car.user = request.user
+			car.save()
+			return HttpResponseRedirect('/autos/result/%s/' % request.user.username)
+	else:
+		form = Auto3Form()
+	
+	return render_to_response('autos/add_a_car.html', {'form': form, 'user': request.user})
