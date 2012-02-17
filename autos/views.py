@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from firstsite.autos.forms import *
-from django.contrib.auth.decorators import user_passes_test
+from firstsite.autos.models import *
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 
 
@@ -21,7 +23,6 @@ def show_users_and_search(request):
 			autos = User.objects.filter(username__icontains=q)
 			return HttpResponseRedirect('/autos/result/%s/' % q)
 	return render_to_response("autos/auto3search.html", {"errors": errors, "all_users": all_users})
-
 
 
 def show_offers_of_user(request, username):
@@ -54,18 +55,13 @@ def show_offers_of_user(request, username):
 				content.append(tuple(l))
 		if not content:
 			errors.append(user.username + ' has no offers.')
-
-#		for entry in alloffers:
-#			content.append((entry.auto_name, entry.pic1, entry.pic2, entry.pic3, entry.pic4, entry.pic5))
-
+	
 	return render_to_response("autos/auto3result.html",
 			{'errors': errors, 'content': content, 'username': user.username},
                    context_instance=RequestContext(request))
 
 
-
-
-#needs to be login for using /books/search
+#needs to be login for using /autos/addcar
 @user_passes_test(lambda u: u.has_perm('autos.add_auto3'))
 def add_a_car(request):
 	if request.method == 'POST':
@@ -79,3 +75,20 @@ def add_a_car(request):
 		form = Auto3Form()
 	
 	return render_to_response('autos/add_a_car.html', {'form': form, 'user': request.user})
+
+
+#needs to be login for using /autos/showcars
+@login_required
+def list_cars_for_editing(request):
+	car_list = Auto3.objects.filter(user=request.user.id)
+
+	errors = []
+	if not car_list:
+		errors.append((request.user.username + u' hat keine Einträge.'))
+
+	return render_to_response('autos/carlist_of_user.html', {
+			'errors': errors,
+			'car_list': car_list,
+			'user': request.user,
+		})
+

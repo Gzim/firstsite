@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style type="text/css">
+	table {
+		border: 1px solid green;
+	}
+	td
+	{
+		text-align:left;
+		width:200px;
+		vertical-align:top;
+		border: 2px solid black;
+	}
+	p {
+		font-family:"Times New Roman", Times, serif;
+		font-style:italic;
+		font-size:12px;
+	}
+	li {
+		font-size:10px;
+		font-style:bold;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+	<h2>Resulst for {{ user.username }}</h2>
+	{% if errors %}
+	<table>
+		<tr>
+			<ul>
+				{% for error in errors %}
+				<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+		</tr>
+	</table>
+	{% endif %}
+	{% if errors %}
+	<table>
+		<tr>
+			<td><p>Auto</p></td>
+		</tr>
+		{% for car in car_list %}
+		<tr>
+			<td><a href="">{{ car }}</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+{% endblock %}
