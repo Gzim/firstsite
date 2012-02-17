@@ -9,10 +9,10 @@ def login_view(request):
 		# Correct password, and the user is marked "active"
 		auth.login(request, user)
 		# Redirect to a success page.
-		return HttpResponseRedirect("/books/publishers/")
+		return HttpResponseRedirect("/")
 	else:
 		#Show an error page
-		return HttpResponseRedirect("/")
+		return HttpResponseRedirect("/login/")
 
 
 def logout_view(request):
